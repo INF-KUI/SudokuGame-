@@ -22,6 +22,16 @@ public class Main extends JFrame{
                 DifficultyChoiceInterface difficultyChoiceInterface=new DifficultyChoiceInterface();
                 main.add(difficultyChoiceInterface);
 
+                int [][] a ={{   1,3,2,4},
+                                {2,4,1,3,},
+                                {3,2,4,1},
+                                {4,1,3,2}};
+if(SudokuArray.isValid(a)){
+    System.out.println("11111");
+}
+else{
+    System.out.println("000000");
+}
 
 
                // difficultyChoiceInterface.addSubContainer(panel);

@@ -10,6 +10,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static javax.print.attribute.standard.MediaSizeName.A;
 
@@ -41,7 +42,13 @@ public class SudokuGameInterface extends JPanel{
         GridBagConstraints con=new GridBagConstraints();
         solveButton = new JButton("完成");
         returnButton =new JButton("重新选择难度");
-        //add(solveButton,con);
+
+        solveButton.addActionListener(e->{
+            Sudoku.cheakAnswer(cells);
+                }
+
+        );
+        add(solveButton,con);
         //add(returnButton,con);
 
        // add(solveButton);
@@ -49,10 +56,131 @@ public class SudokuGameInterface extends JPanel{
 
         //添加点击效果
         addClickEffect(cells);
+        int [][] sudoku =new int[rank][rank];
 
-        //cells=generateSudokuPuzzle(rank, cells);
+        generateSudoku(sudoku);
+        printSudoku(sudoku);
+        copyToFieldd(sudoku,cells);
+        removeNumbers(cells);
 
         }
+
+    private void removeNumbers(JTextField[][] cells) {
+        int rank=cells.length;
+        Random random=new Random();
+        for (int i = 0; i < rank*rank/2; ) {
+            int row=random.nextInt(rank);
+            int col=random.nextInt(rank);
+            if(cells[row][col].getText().isEmpty()){
+                continue;
+            }
+            else {
+                cells[row][col].setText("");
+                i++;
+                continue;
+            }
+
+        }
+
+        for (int i = 0; i < rank; i++) {
+            for (int j = 0; j < rank; j++) {
+                if(!cells[i][j].getText().isEmpty()){
+                    cells[i][j].setEditable(false);
+                }
+            }
+
+        }
+    }
+
+    private void copyToFieldd(int[][] sudoku, JTextField[][] cells) {
+        int rank= sudoku.length;
+        for (int i = 0; i < rank; i++) {
+            for (int j = 0; j < rank; j++) {
+                cells[i][j].setText(Integer.toString(sudoku[i][j]));
+            }
+        }
+    }
+
+    public static void generateSudoku(int[][] board) {
+        solveSudoku(board);
+
+    }
+
+    public static boolean solveSudoku(int[][] board) {
+        int SIZE= board.length;
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                List<Integer> numbers = new ArrayList<>();
+                for (int i = 1; i <= SIZE; i++) {
+                    numbers.add(i);
+                }
+                Collections.shuffle(numbers);
+
+                if (board[row][col] == 0) {
+                    for (int num : numbers) {
+                            board[row][col] = num;
+                        if (SudokuArray.isValid(board)) {
+                            board[row][col] = num;
+                            if (solveSudoku(board)) {
+                                return true;
+                            }
+                            board[row][col] = 0; // 回溯
+                        }
+                        else board[row][col] = 0;
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    public static void printSudoku(int[][] board) {
+        int rank= board.length;
+        for (int row = 0; row < rank; row++) {
+            for (int col = 0; col < rank; col++) {
+                System.out.print(board[row][col] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+
+//    public static void generateSudoku(int[][] sudoku) {
+//        fillSudoku(sudoku);
+//    }
+//
+//    private static boolean fillSudoku(int[][] sudoku) {
+//
+//        //Random random=new Random();
+//        int SIZE= sudoku.length;
+//        int EMPTY=0;
+//
+//        //
+
+////
+//
+//        for (int row = 0; row < SIZE; row++) {
+//            for (int col = 0; col < SIZE; col++) {
+//                if (sudoku[row][col] == EMPTY) {
+//                    Random random=new Random();
+//                    int nums=random.nextInt(SIZE)+1;
+//                        sudoku[row][col] =nums;
+//                        if (SudokuArray.isValid(sudoku)) {
+//                            sudoku[row][col] =nums;
+//                            if (fillSudoku(sudoku)) {
+//                                return true;
+//                            }
+//                            sudoku[row][col] = EMPTY;
+//                        }
+//
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
 
 
     // 为每个文本框添加鼠标事件处理
@@ -68,6 +196,8 @@ public class SudokuGameInterface extends JPanel{
                 public void mouseClicked(MouseEvent e) {
                     // 清除之前选中的文本框背景色
                     clearCellBackground(cells);
+                    if(cells[finalRow][finalCol].isEditable())
+                    cells[finalRow][finalCol].setText("");
                     // 设置选中文本框所在的列和所在的行的背景色
                     fillBackground(cells,rank,finalRow,finalCol);
                     for (int i = 0; i < rank; i++) {
@@ -101,7 +231,7 @@ public class SudokuGameInterface extends JPanel{
     private static void clearCellBackground(JTextField[][] cells) {
         for (int row = 0; row < cells.length ; row++) {
             for (int col = 0; col < cells.length; col++) {
-                cells[row][col].setBackground(null);
+                cells[row][col].setBackground(new Color(255,255,255));
             }
         }
     }
@@ -129,27 +259,6 @@ public class SudokuGameInterface extends JPanel{
 
 
 
-//    private void solveSudoku() {
-//        int[][] board = new int[9][9];
-//
-//        for (int i = 0; i < 9; i++) {
-//            for (int j = 0; j < 9; j++) {
-//                String cellValue = cells[i][j].getText();
-//                if (cellValue.isEmpty()) {
-//                    board[i][j] = 0;
-//                } else {
-//                    board[i][j] = Integer.parseInt(cellValue);
-//                }
-//            }
-//        }
-//
-//        if (solve(board)) {
-//            updateBoard(board);
-//            JOptionPane.showMessageDialog(this, "Sudoku solved successfully!");
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Unable to solve the Sudoku puzzle!");
-//        }
-//    }
 
     private boolean solve(int[][] board) {
         for (int row = 0; row < 9; row++) {
@@ -199,6 +308,7 @@ public class SudokuGameInterface extends JPanel{
             }
         }
     }
+
 
 
     //点击更改所在宫格的背景颜色
