@@ -35,8 +35,12 @@ public class SudokuGame extends JPanel{
                 add(cells[i][j], constraints);
             }
         }
+        GridBagConstraints con=new GridBagConstraints();
         solveButton = new JButton("完成");
         returnButton =new JButton("重新选择难度");
+        //add(solveButton,con);
+        //add(returnButton,con);
+
        // add(solveButton);
         //add(returnButton);
 
@@ -52,16 +56,11 @@ public class SudokuGame extends JPanel{
                         // 清除之前选中的文本框背景色
                         clearCellBackground(cells);
                         // 设置选中文本框所在的列和所在的行的背景色
+                        fillBackground(cells,rank,finalRow,finalCol);
                         for (int i = 0; i < rank; i++) {
                                 cells[finalRow][i].setBackground(new Color(187,222,251));
                                 cells[i][finalCol].setBackground(new Color(187,222,251));
                         }
-                        switch(rank){
-                            case 4:
-                            case 6:
-                            case 9:
-                        }
-
 
                         cells[finalRow][finalCol].setBackground(new Color(226,225,255));
                     }
@@ -72,9 +71,6 @@ public class SudokuGame extends JPanel{
         }
 
 
-        private void fillBackground(JTextField[][] cells,int finalRow,int finalCol ){
-                if()
-    }
 //    private static void generateSudokuPuzzle() {
 //        // Generate a complete Sudoku grid
 //        solveSudoku(0, 0);
@@ -192,6 +188,173 @@ public class SudokuGame extends JPanel{
                 cells[i][j].setText(Integer.toString(board[i][j]));
             }
         }
+    }
+
+
+    //设置所在宫格的背景颜色
+    private void fillBackground(JTextField[][] cells,int rank,int finalRow,int finalCol ){
+
+        Color backgroundColor=new Color(187,222,251);
+        switch(rank){
+            case 4:
+                //1
+                if(finalRow<2&&finalCol<2){
+                    for (int i = 0; i < 2; i++) {
+                        for (int j = 0; j < 2; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //2
+                if(finalRow>1&&finalCol<=1){
+                    for (int i = 2; i < rank; i++) {
+                        for (int j = 0; j < 2; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //3
+                if(finalRow<2&&finalCol>1){
+                    for (int i = 0; i < 2; i++) {
+                        for (int j = 2; j < rank; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //4
+                if(finalRow>1&&finalCol>1){
+                    for (int i = 2; i < rank; i++) {
+                        for (int j = 2; j < rank; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+            case 6:
+
+                //1
+                if(finalRow<3&&finalCol<3){
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j <3; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //2
+                if(finalRow>2&&finalCol<3){
+                    for (int i = 3; i < rank; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //3
+                if(finalRow<3&&finalCol>2){
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 3; j < rank; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //4
+                if(finalRow>2&&finalCol>2){
+                    for (int i = 3; i < rank; i++) {
+                        for (int j = 3; j < rank; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+            case 9:
+                //1
+                if(finalRow<3&&finalCol<3){
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //2
+                if(finalRow>2&&finalRow<6&&finalCol<3){
+                    for (int i = 3; i < 6; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //3
+                if(finalRow>5&&finalCol<3){
+                    for (int i = 6; i < rank; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //4
+                if(finalRow<3&&finalCol>2&&finalCol<6){
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 3; j < 6; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //5
+                if(finalRow>2&&finalRow<6&&finalCol>2&&finalCol<6){
+                    for (int i = 3; i < 6; i++) {
+                        for (int j = 3; j < 6; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //6
+                if(finalRow>5&&finalCol>2&&finalCol<6){
+                    for (int i = 6; i < rank; i++) {
+                        for (int j = 3; j < 6; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //7
+                if(finalRow<3&&finalCol>5){
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 6; j < rank; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //8
+                if(finalRow>2&&finalRow<6&&finalCol>5){
+                    for (int i = 3; i < 6; i++) {
+                        for (int j = 6; j < rank; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //9
+                if(finalRow>5&&finalCol>5){
+                    for (int i = 6; i < rank; i++) {
+                        for (int j = 6; j < rank; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+        }
+
     }
 
 
