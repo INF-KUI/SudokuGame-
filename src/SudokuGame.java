@@ -6,7 +6,11 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 
 import java.awt.event.*;
+import java.security.SecureRandom;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class SudokuGame extends JPanel{
 
@@ -44,13 +48,14 @@ public class SudokuGame extends JPanel{
        // add(solveButton);
         //add(returnButton);
 
+        generateSudokuPuzzle(rank,cells);
         // 为每个文本框添加鼠标事件处理
         for (int row = 0; row < rank; row++) {
             for (int col = 0; col < rank; col++) {
-                JTextField textField = cells[row][col];
+                //JTextField textField = ;
                 int finalRow = row;
                 int finalCol = col;
-                textField.addMouseListener(new MouseAdapter() {
+                cells[row][col].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         // 清除之前选中的文本框背景色
@@ -61,14 +66,69 @@ public class SudokuGame extends JPanel{
                                 cells[finalRow][i].setBackground(new Color(187,222,251));
                                 cells[i][finalCol].setBackground(new Color(187,222,251));
                         }
-
-                        cells[finalRow][finalCol].setBackground(new Color(226,225,255));
+                        cells[finalRow][finalCol].setBackground(new Color(0x52ec7c));
                     }
                 });
 
             }
             }
         }
+
+private static  void generateSudokuPuzzle(int rank,JTextField[][] cells){
+    //Random random = new Random(System.currentTimeMillis());
+
+    for (int i = 0; i < rank; i++) {
+        for (int j = 0; j < rank; j++) {
+            //ThreadLocalRandom random = ThreadLocalRandom.current();
+            // 增加延迟
+            SecureRandom random = new SecureRandom();
+
+
+            do {
+                cells[i][j].setText("");
+                cells[i][j].setText(Integer.toString((random.nextInt( rank)+1)));
+                System.out.println(cells[i][j].getText());
+            }
+            while(!isRowValid(rank,cells,i)||!isColValid(rank,cells,j));
+
+
+            while(!isRowValid(rank,cells,j));
+            isColValid(rank,cells,i);
+
+            cells[i][j].setEditable(false);
+    }
+}
+    }
+
+
+//检查行是否有效
+    private  static boolean isRowValid(int rank,JTextField[][] cells,int row){
+        Set<String> rowSet = new HashSet<>();
+        for (int j = 0;j < rank; j++) {
+            String value = cells[row][j].getText();
+            if (!value.isEmpty()) {
+                if (rowSet.contains(value)) {
+                    return false;
+                }
+                rowSet.add(value);
+            }
+        }
+        return true;
+    }
+    //检查列是否有效
+    private  static boolean isColValid(int rank,JTextField[][] cells,int col){
+        Set<String> colSet = new HashSet<>();
+        for (int i = 0;i < rank; i++) {
+            String value = cells[i][col].getText();
+            if (!value.isEmpty()) {
+                if (colSet.contains(value)) {
+                    return false;
+                }
+                colSet.add(value);
+            }
+        }
+        return true;
+    }
 
 
 //    private static void generateSudokuPuzzle() {
@@ -191,7 +251,7 @@ public class SudokuGame extends JPanel{
     }
 
 
-    //设置所在宫格的背景颜色
+    //点击更改所在宫格的背景颜色
     private void fillBackground(JTextField[][] cells,int rank,int finalRow,int finalCol ){
 
         Color backgroundColor=new Color(187,222,251);

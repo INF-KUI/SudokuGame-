@@ -16,6 +16,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -52,7 +60,7 @@
       <option name="presentableId" value="Default" />
       <updated>1686630633985</updated>
       <workItem from="1686630635148" duration="644000" />
-      <workItem from="1686631299344" duration="3402000" />
+      <workItem from="1686631299344" duration="9600000" />
     </task>
     <task id="LOCAL-00001" summary="难度选择界面&#10;点击行列变色功能">
       <created>1686631359486</created>
@@ -61,7 +69,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686631359486</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="点击所在宫格变色">
+      <created>1686635053130</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1686635053130</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -80,6 +95,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="难度选择界面&#10;点击行列变色功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="难度选择界面&#10;点击行列变色功能" />
+    <MESSAGE value="点击所在宫格变色" />
+    <option name="LAST_COMMIT_MESSAGE" value="点击所在宫格变色" />
   </component>
 </project>
