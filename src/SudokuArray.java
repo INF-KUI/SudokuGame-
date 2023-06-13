@@ -161,7 +161,7 @@ public class SudokuArray {
                     for (int i = 2; i < 4; i++) {
                         for (int j = 0; j < 3; j++) {
                             int value = cells[i][j];
-                            System.out.println("value=="+value);
+                            //System.out.println("value=="+value);
                             if (value!=0) {
                                 if (gridSet.contains(value)) {
                                     return false;
@@ -179,7 +179,7 @@ public class SudokuArray {
                     for (int i = 2; i < 4; i++) {
                         for (int j = 3; j < rank; j++) {
                             int value = cells[i][j];
-                            System.out.println("value=="+value);
+                           // System.out.println("value=="+value);
                             if (value!=0) {
                                 if (gridSet.contains(value)) {
                                     gridSet.clear();
@@ -213,7 +213,7 @@ public class SudokuArray {
                     for (int i = 4; i < rank; i++) {
                         for (int j = 3; j < rank; j++) {
                             int value = cells[i][j];
-                            System.out.println("value=="+value);
+                            //System.out.println("value=="+value);
                             if (value!=0) {
                                 if (gridSet.contains(value)) {
                                     return false;

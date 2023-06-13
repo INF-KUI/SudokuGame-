@@ -6,20 +6,20 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 
 import java.awt.event.*;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static javax.print.attribute.standard.MediaSizeName.A;
-
 public class SudokuGameInterface extends JPanel{
 
-
     private JTextField[][] cells;
-    private JButton solveButton;
-    private JButton returnButton;
+    private JButton returnButton;//返回按钮
+    private JButton resetButton;//重置按钮
+    private JButton finishButton;  //完成按钮
+    private JButton exitButton;//退出按钮
+
+    private static Timer timer ;
 
     public SudokuGameInterface(int rank) {
 
@@ -27,9 +27,8 @@ public class SudokuGameInterface extends JPanel{
         GridBagLayout gridBagLayout=new GridBagLayout();
         setLayout(gridBagLayout);
         GridBagConstraints constraints= new GridBagConstraints();//用来控制添加进的组件的显示位置
-        constraints.weightx = 0;
-        constraints.weighty = 0;
-
+        constraints.weightx = 100;
+        constraints.weighty = 100;
         cells = new JTextField [rank][rank];
         for (int i = 0; i < rank; i++) {
             for (int j = 0; j < rank; j++) {
@@ -39,33 +38,129 @@ public class SudokuGameInterface extends JPanel{
                 add(cells[i][j], constraints);
             }
         }
-        GridBagConstraints con=new GridBagConstraints();
-        solveButton = new JButton("完成");
-        returnButton =new JButton("重新选择难度");
-
-        solveButton.addActionListener(e->{
-            Sudoku.cheakAnswer(cells);
-                }
-
-        );
-        add(solveButton,con);
-        //add(returnButton,con);
-
-       // add(solveButton);
-        //add(returnButton);
-
-        //添加点击效果
+        //为文本框添加点击效果
         addClickEffect(cells);
-        int [][] sudoku =new int[rank][rank];
+        generate(rank,cells);
+////////////////////////////////////////////////////////
+//        int delay = 1000;
+//
+//        // 创建计时显示的组件
+//        JLabel timerLabel = new JLabel("00:00:00");
+//        GridBagConstraints timerConstraints = new GridBagConstraints();
+//        timerConstraints.gridx = 0;
+//        timerConstraints.gridy = 9;
+//        timerConstraints.gridwidth = 9;
+//        timerConstraints.insets = new Insets(10, 5, 10, 5);
+//        timer = new Timer(delay, e -> {
+//            updateTimer(timerLabel);
+//            // 在计时器触发时执行的操作
+//            // 这里可以更新计时显示的文本或执行其他操作
+//        });
+//        add(timerLabel, timerConstraints);
+//        timer.start();
+//
 
-        generateSudoku(sudoku);
-        printSudoku(sudoku);
-        copyToFieldd(sudoku,cells);
-        removeNumbers(cells);
+
+///////////////////////////////////////////////////////////////
+
+        finishButton = new JButton("完成");
+        resetButton =new JButton("重置");
+        returnButton = new JButton("返回");
+        exitButton=new JButton("退出");
+
+    // 设置"完成"按钮的位置和大小
+        GridBagConstraints finishButtonConstraints = new GridBagConstraints();
+        finishButtonConstraints.gridx = 0;
+        finishButtonConstraints.gridy = 10;
+        finishButtonConstraints.gridwidth = 9;
+        finishButtonConstraints.insets = new Insets(10, 5, 10, 5);
+        add(finishButton, finishButtonConstraints);
+        //完成按钮事件监听器
+        finishButton.addActionListener(e->{
+                    Sudoku.checkAnswer(cells);
+                }
+        );
+
+
+        // 设置"返回"按钮的位置和大小
+        GridBagConstraints returnButtonConstraints = new GridBagConstraints();
+        returnButtonConstraints.gridx = 0;
+        returnButtonConstraints.gridy = 11;
+        returnButtonConstraints.gridwidth = 9;
+        returnButtonConstraints.insets = new Insets(10, 5, 10, 5);
+        add(returnButton, returnButtonConstraints);
+
+        returnButton.addActionListener(e -> {
+            //timer.stop();
+            //获取顶层窗口
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            frame.dispose(); // 关闭顶层窗口
+
+            MainFrame mainFrame =new MainFrame();
+            DifficultyChoiceInterface difficultyChoiceInterface=new DifficultyChoiceInterface();
+            mainFrame.add(difficultyChoiceInterface);
+        }
+        );
+
+    // 设置"重置"按钮的位置和大小
+        GridBagConstraints resetButtonConstraints = new GridBagConstraints();
+        resetButtonConstraints.gridx = 0;
+        resetButtonConstraints.gridy = 12;
+        resetButtonConstraints.gridwidth = 9;
+        resetButtonConstraints.insets = new Insets(10, 5, 10, 5);
+        add(resetButton, resetButtonConstraints);
+        //重置按钮事件监听器
+        resetButton.addActionListener(e -> {
+
+            generate(rank,cells);
+
+        });
+
+        // 设置"退出"按钮的位置和大小
+        GridBagConstraints exitButtonConstraints = new GridBagConstraints();
+        exitButtonConstraints.gridx = 0;
+        exitButtonConstraints.gridy = 13;
+        exitButtonConstraints.gridwidth = 9;
+        exitButtonConstraints.insets = new Insets(10, 5, 10, 5);
+        add(exitButton, exitButtonConstraints);
+
+        exitButton.addActionListener(e ->{
+            System.exit(0);
+        });
+
+
+
 
         }
 
-    private void removeNumbers(JTextField[][] cells) {
+
+    private static void updateTimer(JLabel timerLabel) {
+        int seconds = Integer.parseInt(timerLabel.getText().replace(":", ""));
+        seconds++; // 每次触发计时器增加1秒
+        int hours = seconds / 3600;
+        int minutes = (seconds % 3600) / 60;
+        seconds = seconds % 60;
+        String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        timerLabel.setText(timeString);
+    }
+
+
+        private static void generate(int rank,JTextField[][] cells){
+
+
+        Sudoku.clearAll(rank,cells);
+        int [][] sudoku =new int[rank][rank];
+        generateSudoku(sudoku);
+        //printSudoku(sudoku);
+        copyToFieldd(sudoku,cells);
+        // 调用保存函数，并指定保存路径和文件名
+        String filePath = "sudoku.csv";
+        removeNumbers(cells);
+        SudokuSaver.saveSudokuToCSV(filePath,cells);
+        SudokuSaver.saveSudokuToCSV(filePath,sudoku);
+    }
+
+    private static void removeNumbers(JTextField[][] cells) {
         int rank=cells.length;
         Random random=new Random();
         for (int i = 0; i < rank*rank/2; ) {
@@ -92,7 +187,7 @@ public class SudokuGameInterface extends JPanel{
         }
     }
 
-    private void copyToFieldd(int[][] sudoku, JTextField[][] cells) {
+    private static void copyToFieldd(int[][] sudoku, JTextField[][] cells) {
         int rank= sudoku.length;
         for (int i = 0; i < rank; i++) {
             for (int j = 0; j < rank; j++) {
@@ -147,42 +242,6 @@ public class SudokuGameInterface extends JPanel{
     }
 
 
-//    public static void generateSudoku(int[][] sudoku) {
-//        fillSudoku(sudoku);
-//    }
-//
-//    private static boolean fillSudoku(int[][] sudoku) {
-//
-//        //Random random=new Random();
-//        int SIZE= sudoku.length;
-//        int EMPTY=0;
-//
-//        //
-
-////
-//
-//        for (int row = 0; row < SIZE; row++) {
-//            for (int col = 0; col < SIZE; col++) {
-//                if (sudoku[row][col] == EMPTY) {
-//                    Random random=new Random();
-//                    int nums=random.nextInt(SIZE)+1;
-//                        sudoku[row][col] =nums;
-//                        if (SudokuArray.isValid(sudoku)) {
-//                            sudoku[row][col] =nums;
-//                            if (fillSudoku(sudoku)) {
-//                                return true;
-//                            }
-//                            sudoku[row][col] = EMPTY;
-//                        }
-//
-//                    return false;
-//                }
-//            }
-//        }
-//        return true;
-//    }
-
-
     // 为每个文本框添加鼠标事件处理
     private void addClickEffect(JTextField[][] cells){
         int rank=cells.length;
@@ -196,8 +255,11 @@ public class SudokuGameInterface extends JPanel{
                 public void mouseClicked(MouseEvent e) {
                     // 清除之前选中的文本框背景色
                     clearCellBackground(cells);
-                    if(cells[finalRow][finalCol].isEditable())
-                    cells[finalRow][finalCol].setText("");
+                    //判断权限
+                    if(cells[finalRow][finalCol].isEditable()){
+                        cells[finalRow][finalCol].setText("");
+                    }
+
                     // 设置选中文本框所在的列和所在的行的背景色
                     fillBackground(cells,rank,finalRow,finalCol);
                     for (int i = 0; i < rank; i++) {

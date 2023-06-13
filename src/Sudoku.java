@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,24 +9,76 @@ public class Sudoku {
 
 
 //检查当前整个数独是否有效
-    public static boolean isValid(JTextField[][] cells){
+    //返回 1  代表完成且正确
+    //返回 0  代表完成但错误
+    //返回 -1 代表未完成
+    public static int isValid(JTextField[][] cells){
         int rank=cells.length;
+        //未完成
+        for (int i = 0; i < rank; i++) {
+            for (int j = 0; j < rank; j++) {
+                String value = cells[i][j].getText();
+            if(value.isEmpty()){
+                return -1;
+            }
+            }
+        }
+
+
+
         for (int i = 0; i < rank; i++) {
             for (int j = 0; j < rank; j++) {
                 String value = cells[i][j].getText();
                 if (!value.isEmpty()){
-                    if(!isRowValid(rank,cells,i)||!isColValid(rank,cells,j)||!isGridValid(rank,cells,i,j)) {
-                        return false;
-
-                    }
+                if(!isRowValid(rank,cells,i)||!isColValid(rank,cells,j)||!isGridValid(rank,cells,i,j)){
+                    lockAll(cells,new Color(255,0,0));
+                    return 0;
+                }
+                }
 
                 }
             }
-        }
-        return true;
+        lockAll(cells,new Color(0x52ec7c));
+        return 1;
 
     }
-//检查行是否有效
+
+    //锁定所有元素并且标绿所有元素
+    private static void lockAll(JTextField[][] cells,Color color) {
+        int rank=cells.length;
+        for (int i = 0; i < rank; i++) {
+            for (int j = 0; j < rank; j++) {
+                cells[i][j].setBackground(color);
+                cells[i][j].setEditable(false);
+            }}
+
+    }
+
+
+    public static void printAll(int rank,JTextField[][] cells){
+        for (int i = 0; i < rank; i++) {
+            for (int j = 0; j < rank; j++) {
+                System.out.printf("%s ",cells[i][j].getText());
+            }
+            System.out.println();
+        }
+    }
+
+    //清除所有元素，设置权限可修改
+    public static void clearAll(int rank, JTextField[][] cells){
+
+        //printAll(rank, cells);
+        for (int i = 0; i < rank; i++) {
+            for (int j = 0; j < rank; j++) {
+                cells[i][j].setBackground(new Color(255,255,255));
+                cells[i][j].setEditable(true);
+                cells[i][j].setText("");
+            }
+        }
+        //System.out.println("clear all!!");
+
+    }
+    //检查行是否有效
     public   static boolean isRowValid(int rank,JTextField[][] cells,int row){
         Set<String> rowSet = new HashSet<>();
         for (int j = 0;j < rank; j++) {
@@ -55,27 +108,6 @@ public class Sudoku {
     }
 
 
-public static void printAll(int rank,JTextField[][] cells){
-    for (int i = 0; i < rank; i++) {
-        for (int j = 0; j < rank; j++) {
-            System.out.printf("%s ",cells[i][j].getText());
-        }
-        System.out.println();
-    }
-}
-
-
-    public static void clearAll(int rank, JTextField[][] cells){
-
-        printAll(rank, cells);
-        for (int i = 0; i < rank; i++) {
-            for (int j = 0; j < rank; j++) {
-                cells[i][j].setText("");
-            }
-        }
-        //System.out.println("clear all!!");
-
-    }
 
 
     //检查宫格内是否有效
@@ -400,15 +432,22 @@ public static void printAll(int rank,JTextField[][] cells){
         return  true;
     }
 
-    public static void cheakAnswer(JTextField[][] cells) {
-       if( isValid(cells)){
-            System.out.println("正确！！！");
+    public static void checkAnswer(JTextField[][] cells) {
+
+        int returnValue=isValid(cells);
+
+        switch(returnValue){
+            case 1:
+                JOptionPane.showMessageDialog(null, "答案正确！", "完成", JOptionPane.INFORMATION_MESSAGE);
+                //System.out.println("正确！！！");
+                break;
+            case 0:
+                JOptionPane.showMessageDialog(null, "答案错误！", "错误", JOptionPane.INFORMATION_MESSAGE);
+                //System.out.println("错误！！！！！！");
+                break;
+            case -1:
+                JOptionPane.showMessageDialog(null, "未完成！", "未完成", JOptionPane.INFORMATION_MESSAGE);
+               // System.out.println("错误！！！！！！");
         }
-       else {
-           System.out.println("错误！！！！！！");
-       }
-
-
-
     }
 }

@@ -35,14 +35,26 @@ public class DifficultyChoiceInterface extends JPanel {
         String difficulty = (String) difficultyComboBox.getSelectedItem();
         //dispose(); // 关闭难度选择窗口
         removeAll();
-        int dif=Integer.parseInt(String.valueOf(difficulty.charAt(difficulty.length()-1)));
-        SudokuGameInterface sudokuGame = new SudokuGameInterface(dif); // 创建数独游戏窗口
+        //取最后一个数字就是数独的阶数
+        int rank=Integer.parseInt(String.valueOf(difficulty.charAt(difficulty.length()-1)));
+        SudokuGameInterface sudokuGame = new SudokuGameInterface(rank); // 创建数独游戏窗口
         add(sudokuGame);
 
         Window window = SwingUtilities.getWindowAncestor(sudokuGame);
         if (window instanceof JFrame) {
             JFrame parentFrame = (JFrame) window;
-            parentFrame.setSize(dif*70, dif*70);
+            switch(rank){
+                case 4:
+                    parentFrame.setSize(280, 450);
+                    break;
+                case 6:
+                    parentFrame.setSize(420, 530);
+                    break;
+                default:
+                    parentFrame.setSize(540, 680);
+                    break;
+            }
+
         }
         //super.pack();
         revalidate();
