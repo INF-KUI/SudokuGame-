@@ -2,16 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="487e141c-d0ec-44d5-b7b8-835e680e7074" name="变更" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Sudoku.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/SudokuGameInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SudokuGame/SudokuGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SudokuGame/SudokuGame$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SudokuGame/SudokuGame$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SudokuGame/SudokuGame$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SudokuGame/SudokuGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SudokuGame/SudokuGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SudokuGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SudokuGame/DifficultyChoiceInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SudokuGame/DifficultyChoiceInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SudokuGame/SudokuGame$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SudokuGame/SudokuGame$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SudokuGame/SudokuGame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DifficultyChoiceInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DifficultyChoiceInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SudokuGame.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -60,7 +71,7 @@
       <option name="presentableId" value="Default" />
       <updated>1686630633985</updated>
       <workItem from="1686630635148" duration="644000" />
-      <workItem from="1686631299344" duration="9600000" />
+      <workItem from="1686631299344" duration="20345000" />
     </task>
     <task id="LOCAL-00001" summary="难度选择界面&#10;点击行列变色功能">
       <created>1686631359486</created>
@@ -76,7 +87,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686635053130</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="生成的数独行列不重复">
+      <created>1686641198244</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1686641198244</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,6 +114,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="难度选择界面&#10;点击行列变色功能" />
     <MESSAGE value="点击所在宫格变色" />
-    <option name="LAST_COMMIT_MESSAGE" value="点击所在宫格变色" />
+    <MESSAGE value="生成的数独行列不重复" />
+    <option name="LAST_COMMIT_MESSAGE" value="生成的数独行列不重复" />
   </component>
 </project>

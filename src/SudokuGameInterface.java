@@ -7,19 +7,20 @@ import java.awt.*;
 
 import java.awt.event.*;
 import java.security.SecureRandom;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class SudokuGame extends JPanel{
+import static javax.print.attribute.standard.MediaSizeName.A;
+
+public class SudokuGameInterface extends JPanel{
 
 
     private JTextField[][] cells;
     private JButton solveButton;
     private JButton returnButton;
 
-    public SudokuGame(int rank) {
+    public SudokuGameInterface(int rank) {
 
 
         GridBagLayout gridBagLayout=new GridBagLayout();
@@ -27,8 +28,6 @@ public class SudokuGame extends JPanel{
         GridBagConstraints constraints= new GridBagConstraints();//用来控制添加进的组件的显示位置
         constraints.weightx = 0;
         constraints.weighty = 0;
-
-
 
         cells = new JTextField [rank][rank];
         for (int i = 0; i < rank; i++) {
@@ -48,87 +47,40 @@ public class SudokuGame extends JPanel{
        // add(solveButton);
         //add(returnButton);
 
-        generateSudokuPuzzle(rank,cells);
-        // 为每个文本框添加鼠标事件处理
+        //添加点击效果
+        addClickEffect(cells);
+
+        //cells=generateSudokuPuzzle(rank, cells);
+
+        }
+
+
+    // 为每个文本框添加鼠标事件处理
+    private void addClickEffect(JTextField[][] cells){
+        int rank=cells.length;
         for (int row = 0; row < rank; row++) {
-            for (int col = 0; col < rank; col++) {
-                //JTextField textField = ;
-                int finalRow = row;
-                int finalCol = col;
-                cells[row][col].addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        // 清除之前选中的文本框背景色
-                        clearCellBackground(cells);
-                        // 设置选中文本框所在的列和所在的行的背景色
-                        fillBackground(cells,rank,finalRow,finalCol);
-                        for (int i = 0; i < rank; i++) {
-                                cells[finalRow][i].setBackground(new Color(187,222,251));
-                                cells[i][finalCol].setBackground(new Color(187,222,251));
-                        }
-                        cells[finalRow][finalCol].setBackground(new Color(0x52ec7c));
+        for (int col = 0; col < rank; col++) {
+            //JTextField textField = ;
+            int finalRow = row;
+            int finalCol = col;
+            cells[row][col].addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // 清除之前选中的文本框背景色
+                    clearCellBackground(cells);
+                    // 设置选中文本框所在的列和所在的行的背景色
+                    fillBackground(cells,rank,finalRow,finalCol);
+                    for (int i = 0; i < rank; i++) {
+                        cells[finalRow][i].setBackground(new Color(187,222,251));
+                        cells[i][finalCol].setBackground(new Color(187,222,251));
                     }
-                });
-
-            }
-            }
-        }
-
-private static  void generateSudokuPuzzle(int rank,JTextField[][] cells){
-    //Random random = new Random(System.currentTimeMillis());
-
-    for (int i = 0; i < rank; i++) {
-        for (int j = 0; j < rank; j++) {
-            //ThreadLocalRandom random = ThreadLocalRandom.current();
-            // 增加延迟
-            SecureRandom random = new SecureRandom();
-
-
-            do {
-                cells[i][j].setText("");
-                cells[i][j].setText(Integer.toString((random.nextInt( rank)+1)));
-                System.out.println(cells[i][j].getText());
-            }
-            while(!isRowValid(rank,cells,i)||!isColValid(rank,cells,j));
-
-
-            while(!isRowValid(rank,cells,j));
-            isColValid(rank,cells,i);
-
-            cells[i][j].setEditable(false);
-    }
-}
-    }
-
-
-//检查行是否有效
-    private  static boolean isRowValid(int rank,JTextField[][] cells,int row){
-        Set<String> rowSet = new HashSet<>();
-        for (int j = 0;j < rank; j++) {
-            String value = cells[row][j].getText();
-            if (!value.isEmpty()) {
-                if (rowSet.contains(value)) {
-                    return false;
+                    cells[finalRow][finalCol].setBackground(new Color(0x52ec7c));
                 }
-                rowSet.add(value);
-            }
+            });
         }
-        return true;
-    }
-    //检查列是否有效
-    private  static boolean isColValid(int rank,JTextField[][] cells,int col){
-        Set<String> colSet = new HashSet<>();
-        for (int i = 0;i < rank; i++) {
-            String value = cells[i][col].getText();
-            if (!value.isEmpty()) {
-                if (colSet.contains(value)) {
-                    return false;
-                }
-                colSet.add(value);
-            }
-        }
-        return true;
-    }
+    }}
+
+
 
 
 //    private static void generateSudokuPuzzle() {
@@ -144,8 +96,6 @@ private static  void generateSudokuPuzzle(int rank,JTextField[][] cells){
 //            sudokuGrid[row][col] = 0;
 //        }
 //    }
-
-
 
     //清除所有背景颜色
     private static void clearCellBackground(JTextField[][] cells) {
@@ -296,8 +246,8 @@ private static  void generateSudokuPuzzle(int rank,JTextField[][] cells){
             case 6:
 
                 //1
-                if(finalRow<3&&finalCol<3){
-                    for (int i = 0; i < 3; i++) {
+                if(finalRow<2&&finalCol<3){
+                    for (int i = 0; i < 2; i++) {
                         for (int j = 0; j <3; j++) {
                             cells[i][j].setBackground(backgroundColor);
                         }
@@ -305,26 +255,46 @@ private static  void generateSudokuPuzzle(int rank,JTextField[][] cells){
                     break;
                 }
                 //2
-                if(finalRow>2&&finalCol<3){
-                    for (int i = 3; i < rank; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //3
-                if(finalRow<3&&finalCol>2){
-                    for (int i = 0; i < 3; i++) {
+                if(finalRow<2&&finalCol>2){
+                    for (int i = 0; i < 2; i++) {
                         for (int j = 3; j < rank; j++) {
                             cells[i][j].setBackground(backgroundColor);
                         }
                     }
                     break;
                 }
+                //3
+                if(finalRow>1&&finalRow<4&&finalCol<3){
+                    for (int i = 2; i < 4; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
                 //4
-                if(finalRow>2&&finalCol>2){
-                    for (int i = 3; i < rank; i++) {
+                if(finalRow>1&&finalRow<4&&finalCol>2){
+                    for (int i = 2; i < 4; i++) {
+                        for (int j = 3; j < rank; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+
+
+                //5
+                if(finalRow>3&&finalCol<3){
+                    for (int i = 4; i < rank; i++) {
+                        for (int j =0; j < 3; j++) {
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                    break;
+                }
+                //6
+                if(finalRow>3&&finalCol>2){
+                    for (int i = 4; i < rank; i++) {
                         for (int j = 3; j < rank; j++) {
                             cells[i][j].setBackground(backgroundColor);
                         }

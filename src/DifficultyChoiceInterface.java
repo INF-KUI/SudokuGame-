@@ -36,7 +36,7 @@ public class DifficultyChoiceInterface extends JPanel {
         //dispose(); // 关闭难度选择窗口
         removeAll();
         int dif=Integer.parseInt(String.valueOf(difficulty.charAt(difficulty.length()-1)));
-        SudokuGame sudokuGame = new SudokuGame(dif); // 创建数独游戏窗口
+        SudokuGameInterface sudokuGame = new SudokuGameInterface(dif); // 创建数独游戏窗口
         add(sudokuGame);
 
         Window window = SwingUtilities.getWindowAncestor(sudokuGame);
