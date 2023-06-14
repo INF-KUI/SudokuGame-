@@ -12,7 +12,7 @@ public class SudokuSaver {
         int rank=cells.length;
 
         try {
-            FileWriter writer = new FileWriter(filePath, Charset.defaultCharset(),true);
+            FileWriter writer = new FileWriter(filePath,true);
             LocalDateTime now = LocalDateTime.now();
 
             writer.write("时间:");

@@ -14,7 +14,6 @@ public class SudokuArray {
                     if(!isRowValid(rank,cells,i)||!isColValid(rank,cells,j)||!isGridValid(rank,cells,i,j)) {
                         return false;
                     }
-
                 }
             }
         }
@@ -53,323 +52,63 @@ public class SudokuArray {
 
     //检查宫格内是否有效
     public static boolean isGridValid(int rank, int [][] cells, int row, int col){
-        switch(rank){
+        Set<Integer> gridSet = new HashSet<>();
+        int starRow;
+        int starCol;
+        switch(rank) {
+
             case 4:
-                //1
-                if(row<2&&col<2){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
+                starRow = row / 2;
+                starCol = col / 2;
+                for (int i = starRow*2; i < starRow*2 + 2; i++) {
+                    for (int j = starCol*2; j < starCol*2+2; j++) {
+                        int value = cells[i][j];
+                        if (value != 0) {
+                            if (gridSet.contains(value)) {
+                                return false;
                             }
+                            gridSet.add(value);
                         }
                     }
+                }
+                break;
 
-                    break;
-                }
-                //2
-                if(row>1&&col<=1){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 2; i < rank; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //3
-                if(row<2&&col>1){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 2; j < rank; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //4
-                if(row>1&&col>1){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 2; i < rank; i++) {
-                        for (int j = 2; j < rank; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
+
             case 6:
+                starRow = row / 2;
+                starCol = col / 3;
+                for (int i = starRow*2; i < starRow*2 + 2; i++) {
+                    for (int j = starCol*3; j < starCol*3+3; j++) {
+                        int value = cells[i][j];
+                        if (value != 0) {
+                            if (gridSet.contains(value)) {
+                                return false;
+                            }
+                            gridSet.add(value);
+                        }
+                    }
+                }
+                break;
 
-                //1
-                if(row<2&&col<3){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 0; j <3; j++) {
-                            int value = cells[i][j];
-
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //2
-                if(row<2&&col>2){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 3; j < rank; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //3
-                if(row>1&&row<4&&col<3){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 2; i < 4; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            int value = cells[i][j];
-                            //System.out.println("value=="+value);
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //4
-                if(row>1&&row<4&&col>2){
-                    Set<Integer> gridSet = new HashSet<>();
-
-                    for (int i = 2; i < 4; i++) {
-                        for (int j = 3; j < rank; j++) {
-                            int value = cells[i][j];
-                           // System.out.println("value=="+value);
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    gridSet.clear();
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //5
-                if(row>3&&col<3){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 4; i < rank; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //6
-                if(row>3&&col>2){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 4; i < rank; i++) {
-                        for (int j = 3; j < rank; j++) {
-                            int value = cells[i][j];
-                            //System.out.println("value=="+value);
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
             case 9:
-                //1
-                if(row<3&&col<3){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
+
+                starRow = row / 3;
+                starCol = col / 3;
+
+                for (int i = starRow*3; i < starRow*3 + 3; i++) {
+                    for (int j = starCol*3; j < starCol*3+3; j++) {
+                        int value = cells[i][j];
+                        if (value != 0) {
+                            if (gridSet.contains(value)) {
+                                return false;
                             }
+                            gridSet.add(value);
                         }
                     }
-                    break;
                 }
-                //2
-                if(row>2&&row<6&&col<3){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 3; i < 6; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //3
-                if(row>5&&col<3){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 6; i < rank; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //4
-                if(row<3&&col>2&&col<6){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 3; j < 6; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //5
-                if(row>2&&row<6&&col>2&&col<6){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 3; i < 6; i++) {
-                        for (int j = 3; j < 6; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //6
-                if(row>5&&col>2&&col<6){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 6; i < rank; i++) {
-                        for (int j = 3; j < 6; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //7
-                if(row<3&&col>5){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 6; j < rank; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //8
-                if(row>2&&row<6&&col>5){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 3; i < 6; i++) {
-                        for (int j = 6; j < rank; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
-                //9
-                if(row>5&&col>5){
-                    Set<Integer> gridSet = new HashSet<>();
-                    for (int i = 6; i < rank; i++) {
-                        for (int j = 6; j < rank; j++) {
-                            int value = cells[i][j];
-                            if (value!=0) {
-                                if (gridSet.contains(value)) {
-                                    return false;
-                                }
-                                gridSet.add(value);
-                            }
-                        }
-                    }
-                    break;
-                }
+                break;
         }
-        return  true;
+
+        return true;
     }
 }
