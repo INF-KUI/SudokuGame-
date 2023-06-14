@@ -14,7 +14,7 @@ public class DifficultyChoiceInterface extends JPanel {
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
-        difficultyComboBox = new JComboBox<>(new String[]{"简单4x4", "中等6x6", "困难9x9"});
+        difficultyComboBox = new JComboBox<>(new String[]{"简单4x4", "中等6x6", "困难9x9","对角线数独"});
         startButton = new JButton("开始游戏");
         startButton.addActionListener(e -> {
             generateSudoku();

@@ -148,7 +148,7 @@ public class SudokuGameInterface extends JPanel{
         private static void generate(int rank,JTextField[][] cells){
 
 
-        Sudoku.clearAll(rank,cells);
+        Sudoku.clearAll(cells);
         int [][] sudoku =new int[rank][rank];
         generateSudoku(sudoku);
         //printSudoku(sudoku);
@@ -255,17 +255,22 @@ public class SudokuGameInterface extends JPanel{
                 public void mouseClicked(MouseEvent e) {
                     // 清除之前选中的文本框背景色
                     clearCellBackground(cells);
-                    //判断权限
+                    //判断权限若是可编辑代表是玩家需要填的数字，将格子内文字消除
                     if(cells[finalRow][finalCol].isEditable()){
                         cells[finalRow][finalCol].setText("");
                     }
 
+
+                    //设置选中文本框所在的宫格的背景色
+                    fillBackground(cells,finalRow,finalCol);
                     // 设置选中文本框所在的列和所在的行的背景色
-                    fillBackground(cells,rank,finalRow,finalCol);
                     for (int i = 0; i < rank; i++) {
                         cells[finalRow][i].setBackground(new Color(187,222,251));
                         cells[i][finalCol].setBackground(new Color(187,222,251));
                     }
+
+                    // 设置选中文本框所在的对角线的背景色
+                    fillDiagonalBackground(cells,finalRow,finalCol);
                     cells[finalRow][finalCol].setBackground(new Color(0x52ec7c));
                 }
             });
@@ -374,190 +379,101 @@ public class SudokuGameInterface extends JPanel{
 
 
     //点击更改所在宫格的背景颜色
-    private void fillBackground(JTextField[][] cells,int rank,int finalRow,int finalCol ){
+    private void fillBackground(JTextField[][] cells,int row,int col ){
+        int rank= cells.length;
 
         Color backgroundColor=new Color(187,222,251);
+        int starRow;
+        int starCol;
         switch(rank){
             case 4:
-                //1
-                if(finalRow<2&&finalCol<2){
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
+                starRow = row / 2;
+                starCol = col / 2;
+                for (int i = starRow*2; i < starRow*2 + 2; i++) {
+                    for (int j = starCol*2; j < starCol*2+2; j++) {
+                        cells[i][j].setBackground(backgroundColor);
                     }
-                    break;
                 }
-                //2
-                if(finalRow>1&&finalCol<=1){
-                    for (int i = 2; i < rank; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //3
-                if(finalRow<2&&finalCol>1){
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 2; j < rank; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //4
-                if(finalRow>1&&finalCol>1){
-                    for (int i = 2; i < rank; i++) {
-                        for (int j = 2; j < rank; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
+                break;
+
             case 6:
+                starRow = row / 2;
+                starCol = col / 3;
+                for (int i = starRow*2; i < starRow*2 + 2; i++) {
+                    for (int j = starCol*3; j < starCol*3+3; j++) {
+                        cells[i][j].setBackground(backgroundColor);
+                    }
+                }
+                break;
 
-                //1
-                if(finalRow<2&&finalCol<3){
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 0; j <3; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //2
-                if(finalRow<2&&finalCol>2){
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 3; j < rank; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //3
-                if(finalRow>1&&finalRow<4&&finalCol<3){
-                    for (int i = 2; i < 4; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //4
-                if(finalRow>1&&finalRow<4&&finalCol>2){
-                    for (int i = 2; i < 4; i++) {
-                        for (int j = 3; j < rank; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-
-
-                //5
-                if(finalRow>3&&finalCol<3){
-                    for (int i = 4; i < rank; i++) {
-                        for (int j =0; j < 3; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //6
-                if(finalRow>3&&finalCol>2){
-                    for (int i = 4; i < rank; i++) {
-                        for (int j = 3; j < rank; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
             case 9:
-                //1
-                if(finalRow<3&&finalCol<3){
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
+                starRow = row / 3;
+                starCol = col / 3;
+                for (int i = starRow*3; i < starRow*3 + 3; i++) {
+                    for (int j = starCol*3; j < starCol*3+3; j++) {
+                        cells[i][j].setBackground(backgroundColor);
                     }
-                    break;
                 }
-                //2
-                if(finalRow>2&&finalRow<6&&finalCol<3){
-                    for (int i = 3; i < 6; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //3
-                if(finalRow>5&&finalCol<3){
-                    for (int i = 6; i < rank; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //4
-                if(finalRow<3&&finalCol>2&&finalCol<6){
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 3; j < 6; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //5
-                if(finalRow>2&&finalRow<6&&finalCol>2&&finalCol<6){
-                    for (int i = 3; i < 6; i++) {
-                        for (int j = 3; j < 6; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //6
-                if(finalRow>5&&finalCol>2&&finalCol<6){
-                    for (int i = 6; i < rank; i++) {
-                        for (int j = 3; j < 6; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //7
-                if(finalRow<3&&finalCol>5){
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 6; j < rank; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //8
-                if(finalRow>2&&finalRow<6&&finalCol>5){
-                    for (int i = 3; i < 6; i++) {
-                        for (int j = 6; j < rank; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
-                //9
-                if(finalRow>5&&finalCol>5){
-                    for (int i = 6; i < rank; i++) {
-                        for (int j = 6; j < rank; j++) {
-                            cells[i][j].setBackground(backgroundColor);
-                        }
-                    }
-                    break;
-                }
+                break;
         }
 
     }
 
 
-}
+    //点击更改所在对角线的背景颜色
+    private void fillDiagonalBackground(JTextField[][] cells,int row,int col ){
+        Color backgroundColor=new Color(187,222,251);
+        int rank= cells.length;
+        String diagonalType="null" ;  //所处的对角线类型
+        if(row==col&&row+col==rank-1){
+            diagonalType="bothDiagonal";    //既是主对角线也是反对角线
+        }
+        else if(row==col){
+            diagonalType="mainDiagonal";    //主主对角线
+        }
+        else if(row+col==rank-1){
+            diagonalType="antiDiagonal";    //反对角线
+        }
+
+
+        switch (diagonalType){
+
+            case "bothDiagonal":
+                for (int i = 0; i < rank; i++) {
+                    for (int j = 0; j < rank; j++) {
+                        //主对角线元素
+                        if(i==j||i+j==rank-1){
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                }
+                break;
+            case "mainDiagonal":
+                for (int i = 0; i < rank; i++) {
+                    for (int j = 0; j < rank; j++) {
+                        //主对角线元素
+                        if(i==j){
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                }
+                break;
+            case "antiDiagonal":
+                for (int i = 0; i < rank; i++) {
+                    for (int j = 0; j < rank; j++) {
+
+                        //反对角线
+                        if(i+j==rank-1){
+                            cells[i][j].setBackground(backgroundColor);
+                        }
+                    }
+                }
+                break;
+        }
+
+    }
+
+
+
+
+    }

@@ -6,17 +6,14 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="487e141c-d0ec-44d5-b7b8-835e680e7074" name="变更" comment="基本功能完成">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="487e141c-d0ec-44d5-b7b8-835e680e7074" name="变更" comment="数独检查算法优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SudokuGame.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SudokuGame.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SudokuGame/Main$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SudokuGame/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SudokuGame/DifficultyChoiceInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SudokuGame/DifficultyChoiceInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DifficultyChoiceInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DifficultyChoiceInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Sudoku.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sudoku.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SudokuArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuArray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SudokuSaver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuSaver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SudokuGameInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuGameInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +40,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2R8TJ86NSnWsnMGNJCBAeq6Nczf" />
   <component name="ProjectViewState">
@@ -89,7 +89,7 @@
       <workItem from="1686679223607" duration="28000" />
       <workItem from="1686712832025" duration="1100000" />
       <workItem from="1686713964299" duration="133000" />
-      <workItem from="1686714111934" duration="5341000" />
+      <workItem from="1686714111934" duration="9742000" />
     </task>
     <task id="LOCAL-00001" summary="难度选择界面&#10;点击行列变色功能">
       <created>1686631359486</created>
@@ -133,7 +133,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686677410793</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="数独检查算法优化">
+      <created>1686759096364</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1686759096364</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,6 +164,7 @@
     <MESSAGE value="生成数独函数错误" />
     <MESSAGE value="生成数独成功&#10;移除一半的元素并且将剩下的设置为不可编辑" />
     <MESSAGE value="基本功能完成" />
-    <option name="LAST_COMMIT_MESSAGE" value="基本功能完成" />
+    <MESSAGE value="数独检查算法优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="数独检查算法优化" />
   </component>
 </project>

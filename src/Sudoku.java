@@ -24,13 +24,11 @@ public class Sudoku {
             }
         }
 
-
-
         for (int i = 0; i < rank; i++) {
             for (int j = 0; j < rank; j++) {
                 String value = cells[i][j].getText();
                 if (!value.isEmpty()){
-                if(!isRowValid(rank,cells,i)||!isColValid(rank,cells,j)||!isGridValid(rank,cells,i,j)){
+                if(!isRowValid(cells,i)||!isColValid(cells,j)||!isGridValid(cells,i,j)){
                     lockAll(cells,new Color(255,0,0));
                     return 0;
                 }
@@ -43,7 +41,7 @@ public class Sudoku {
 
     }
 
-    //锁定所有元素并且标绿所有元素
+    //锁定所有元素
     private static void lockAll(JTextField[][] cells,Color color) {
         int rank=cells.length;
         for (int i = 0; i < rank; i++) {
@@ -65,9 +63,10 @@ public class Sudoku {
     }
 
     //清除所有元素，设置权限可修改
-    public static void clearAll(int rank, JTextField[][] cells){
+    public static void clearAll(JTextField[][] cells){
 
         //printAll(rank, cells);
+        int rank=cells.length;
         for (int i = 0; i < rank; i++) {
             for (int j = 0; j < rank; j++) {
                 cells[i][j].setBackground(new Color(255,255,255));
@@ -79,7 +78,9 @@ public class Sudoku {
 
     }
     //检查行是否有效
-    public   static boolean isRowValid(int rank,JTextField[][] cells,int row){
+    public   static boolean isRowValid(JTextField[][] cells,int row){
+
+        int rank= cells.length;
         Set<String> rowSet = new HashSet<>();
         for (int j = 0;j < rank; j++) {
             String value = cells[row][j].getText();
@@ -93,7 +94,8 @@ public class Sudoku {
         return true;
     }
     //检查列是否有效
-    public   static boolean isColValid(int rank,JTextField[][] cells,int col){
+    public   static boolean isColValid(JTextField[][] cells,int col){
+        int rank= cells.length;
         Set<String> colSet = new HashSet<>();
         for (int i = 0;i < rank; i++) {
             String value = cells[i][col].getText();
@@ -106,13 +108,106 @@ public class Sudoku {
         }
         return true;
     }
+//检查对角线内是否有效
+    public static boolean isDiagonalSetValid(JTextField[][] cells, int row, int col){
+        int rank= cells.length;
+        String diagonalType ="null";  //所处的对角线类型
+
+        Set<String> mainDiagonalSet = new HashSet<>();
+        Set<String> antiDiagonalSet = new HashSet<>();
+
+    if(row==col&&row+col==rank-1){
+        diagonalType="bothDiagonal";    //既是主对角线也是反对角线
+        }
+        else if(row==col){
+            diagonalType="mainDiagonal";    //主主对角线
+        }
+        else if(row+col==rank-1){
+            diagonalType="antiDiagonal";    //反对角线
+        }
+        else {
+            return true;
+        }
+
+            switch (diagonalType){
+
+            case "bothDiagonal":
+
+                //检查主对角线的元素是否有重复
+                for (int i = 0; i < rank; i++) {
+                    for (int j = 0; j < rank; j++) {
+                        String value = cells[i][j].getText();
+                        //主对角线元素
+                        if(i==j){
+                            if (!value.isEmpty()) {
+                                if (mainDiagonalSet.contains(value)) {
+                                    return false;
+                                }
+                                mainDiagonalSet.add(value);
+                            }
+                        }
+                    }
+                }
+                //检查反对角线的元素是否有重复
+                for (int i = 0; i < rank; i++) {
+                    for (int j = 0; j < rank; j++) {
+                        String value = cells[i][j].getText();
+                        //主对角线
+                        if(i+j==rank-1){
+                            if (!value.isEmpty()) {
+                                if (antiDiagonalSet.contains(value)) {
+                                    return false;
+                                }
+                                antiDiagonalSet.add(value);
+                            }
+                        }
+                    }
+                }
+                break;
 
 
+            case "mainDiagonal":
+                for (int i = 0; i < rank; i++) {
+                    for (int j = 0; j < rank; j++) {
+                        String value = cells[i][j].getText();
+                        //主对角线元素
+                        if(i==j){
+                            if (!value.isEmpty()) {
+                                if (mainDiagonalSet.contains(value)) {
+                                    return false;
+                                }
+                                mainDiagonalSet.add(value);
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case "antiDiagonal":
+                for (int i = 0; i < rank; i++) {
+                    for (int j = 0; j < rank; j++) {
+                        String value = cells[i][j].getText();
+                        //主对角线
+                        if(i+j==rank-1){
+                            if (!value.isEmpty()) {
+                                if (antiDiagonalSet.contains(value)) {
+                                    return false;
+                                }
+                                antiDiagonalSet.add(value);
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+
+        return true;
+    }
 
 
     //检查宫格内是否有效
-    public static boolean isGridValid(int rank, JTextField[][] cells, int row, int col){
-
+    public static boolean isGridValid(JTextField[][] cells, int row, int col){
+         int rank= cells.length;
         Set<String> gridSet = new HashSet<>();
         int starRow;
         int starCol;
@@ -170,7 +265,7 @@ public class Sudoku {
         return  true;
     }
 
-    public static void checkAnswer(JTextField[][] cells) {
+    public static void checkAnswer (JTextField [][] cells) {
 
         int returnValue=isValid(cells);
 
