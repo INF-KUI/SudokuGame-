@@ -6,10 +6,13 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="487e141c-d0ec-44d5-b7b8-835e680e7074" name="变更" comment="实现特殊宫格检测重复&#10;但题目生成得很慢">
+    <list default="true" id="487e141c-d0ec-44d5-b7b8-835e680e7074" name="变更" comment="对角线数独未使用特殊宫格(求解算法效率太低)&#10;需要使用舞蹈链(Dancing Links)算法求解">
+      <change afterPath="$PROJECT_DIR$/src/SudokuGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sudoku.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sudoku.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SudokuArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DifficultyChoiceInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DifficultyChoiceInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sudoku.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SudokuArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuArrayChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SudokuGameInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuGameInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,7 +97,7 @@
       <workItem from="1686679223607" duration="28000" />
       <workItem from="1686712832025" duration="1100000" />
       <workItem from="1686713964299" duration="133000" />
-      <workItem from="1686714111934" duration="24431000" />
+      <workItem from="1686714111934" duration="26102000" />
     </task>
     <task id="LOCAL-00001" summary="难度选择界面&#10;点击行列变色功能">
       <created>1686631359486</created>
@@ -159,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686800850235</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="对角线数独未使用特殊宫格(求解算法效率太低)&#10;需要使用舞蹈链(Dancing Links)算法求解">
+      <created>1686811012543</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1686811012543</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -186,6 +196,7 @@
     <MESSAGE value="数独检查算法优化" />
     <MESSAGE value="对角线检测重复算法实现" />
     <MESSAGE value="实现特殊宫格检测重复&#10;但题目生成得很慢" />
-    <option name="LAST_COMMIT_MESSAGE" value="实现特殊宫格检测重复&#10;但题目生成得很慢" />
+    <MESSAGE value="对角线数独未使用特殊宫格(求解算法效率太低)&#10;需要使用舞蹈链(Dancing Links)算法求解" />
+    <option name="LAST_COMMIT_MESSAGE" value="对角线数独未使用特殊宫格(求解算法效率太低)&#10;需要使用舞蹈链(Dancing Links)算法求解" />
   </component>
 </project>

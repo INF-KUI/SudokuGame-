@@ -1,8 +1,7 @@
-import javax.swing.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class SudokuArray {
+public class SudokuArrayChecker {
 
     //检查当前整个数独是否有效
     public static boolean isValid(int [][] cells,boolean isDiagonalSudoku){
@@ -230,7 +229,7 @@ public class SudokuArray {
         int rank= cells.length;
         Set<Integer > specialGridSet = new HashSet<>();
 
-        int fromWhich= Sudoku.detectFromWhichGrid(row,col);
+        int fromWhich= SudokuChecker.detectFromWhichGrid(row,col);
         int value=0;
         switch(fromWhich){
             case 1:

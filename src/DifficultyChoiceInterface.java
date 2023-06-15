@@ -65,13 +65,13 @@ public class DifficultyChoiceInterface extends JPanel {
             JFrame parentFrame = (JFrame) window;
             switch(rank){
                 case 4:
-                    parentFrame.setSize(280, 450);
+                    parentFrame.setSize(420, 580);
                     break;
                 case 6:
-                    parentFrame.setSize(420, 530);
+                    parentFrame.setSize(550, 750);
                     break;
                 default:
-                    parentFrame.setSize(540, 680);
+                    parentFrame.setSize(840, 980);
                     break;
             }
 
