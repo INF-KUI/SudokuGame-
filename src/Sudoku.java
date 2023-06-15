@@ -28,7 +28,7 @@ public class Sudoku {
                 for (int j = 0; j < rank; j++) {
                     String value = cells[i][j].getText();
                     if (!value.isEmpty()){
-                        if(!isRowValid(cells,i)||!isColValid(cells,j)||!isDiagonalValid(cells,i,j)||!isSpecialGridValid(cells,i,j)){
+                        if(!isRowValid(cells,i)||!isColValid(cells,j)||!isDiagonalValid(cells,i,j)||!isGridValid(cells,i,j)){
                             lockAll(cells,new Color(255,0,0));
                             return 0;
                         }

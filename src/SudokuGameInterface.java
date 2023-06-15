@@ -198,11 +198,37 @@ public class SudokuGameInterface extends JPanel{
 
     public static void generateSudoku(int[][] board,boolean isDiagonalSudoku) {
         solveSudoku(board,isDiagonalSudoku);
-
     }
-
+    //回溯法解决数独问题
+//    public static void main(String[] args) {
+//        int[][] board=new int[9][9];
+//        board[0][3]=9;
+//        board[1][5]=8;
+//        board[1][6]=5;
+//        board[1][8]=2;
+//        board[2][7]=3;
+//        board[3][0]=4;
+//        board[3][3]=8;
+//        board[3][5]=7;
+//        board[3][7]=2;
+//        board[4][7]=5;
+//        board[5][1]=7;
+//        board[5][3]=6;
+//        board[6][1]=8;
+//        board[6][8]=3;
+//        board[7][2]=2;
+//        board[7][4]=9;
+//        board[8][1]=5;
+//        board[8][6]=2;
+//        board[8][8]=7;
+//        printSudoku(board);
+//        System.out.println();
+//        solveSudoku(board,true);
+//        printSudoku(board);
+//
+//
+//    }
     public static boolean solveSudoku(int[][] board,boolean isDiagonalSudoku) {
-
 
         int SIZE= board.length;
         for (int row = 0; row < SIZE; row++) {
@@ -211,14 +237,19 @@ public class SudokuGameInterface extends JPanel{
                 for (int i = 1; i <= SIZE; i++) {
                     numbers.add(i);
                 }
+                //deleteNumbers(numbers,board);
+                //System.out.println(numbers);
                 Collections.shuffle(numbers);
+                //System.out.println(numbers);
 
                 if (board[row][col] == 0) {
                     for (int num : numbers) {
                             board[row][col] = num;
+                        //System.out.printf("row=%d col=%d num=%d \n",row ,col,num);
                         if (SudokuArray.isValid(board,isDiagonalSudoku)) {
                             board[row][col] = num;
                             if (solveSudoku(board,isDiagonalSudoku)) {
+                                //printSudoku(board);
                                 return true;
                             }
                             board[row][col] = 0; // 回溯
@@ -230,6 +261,12 @@ public class SudokuGameInterface extends JPanel{
             }
         }
         return true;
+    }
+
+    private static void deleteNumbers(List<Integer> numbers, int[][] board) {
+        int rank=board.length;
+
+
     }
 
 
@@ -270,13 +307,10 @@ public class SudokuGameInterface extends JPanel{
                     // 设置选中文本框所在的对角线的背景色
                     if(isDiagonalSudoku){
                         fillDiagonalBackground(cells,finalRow,finalCol);
-                        fillSpecialBackground(cells,finalRow,finalCol);
-
+                        // fillSpecialBackground(cells,finalRow,finalCol);
                     }
-                    else{
-                        //设置选中文本框所在的宫格的背景色
-                        fillBackground(cells,finalRow,finalCol);
-                    }
+                    //设置选中文本框所在的宫格的背景色
+                    fillBackground(cells,finalRow,finalCol);
                     //更改当前选中的格子的背景色
                     cells[finalRow][finalCol].setBackground(new Color(0x52ec7c));
                 }

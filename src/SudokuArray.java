@@ -13,9 +13,9 @@ public class SudokuArray {
                 for (int j = 0; j < rank; j++) {
                     int value = cells[i][j];
                     if (value!=0){
-                        //检查行 列  对角线 特殊宫格 是有否重复
-                        //条件严格题目生成得很慢
-                        if(!isRowValid(cells,i)||!isColValid(cells,j)||!isDiagonalSetValid(cells,i,j)||!isSpecialGridValid(cells,i,j)) {
+                        //检查行 列  对角线 宫格 是有否重复
+                        //如果检测特殊宫格，条件严格题目生成得很慢
+                        if(!isRowValid(cells,i)||!isColValid(cells,j)||!isDiagonalSetValid(cells,i,j)||!isGridValid(cells,i,j)) {
                             return false;
                         }
                     }
@@ -37,7 +37,7 @@ public class SudokuArray {
             }
         }
 
-
+        //System.out.printf("true\n");
         return true;
 
     }
@@ -165,13 +165,11 @@ public class SudokuArray {
                     for (int j = 0; j < rank; j++) {
                         int value = cells[i][j];
                         //主对角线元素
-                        if(i==j){
-                            if (value != 0) {
+                        if(i==j&&value != 0){
                                 if (mainDiagonalSet.contains(value)) {
                                     return false;
                                 }
                                 mainDiagonalSet.add(value);
-                            }
                         }
                     }
                 }
@@ -180,13 +178,11 @@ public class SudokuArray {
                     for (int j = 0; j < rank; j++) {
                         int value = cells[i][j];
                         //反对角线
-                        if(i+j==rank-1){
-                            if (value != 0) {
+                        if(i+j==rank-1&&value!=0){
                                 if (antiDiagonalSet.contains(value)) {
                                     return false;
                                 }
                                 antiDiagonalSet.add(value);
-                            }
                         }
                     }
                 }
@@ -198,13 +194,12 @@ public class SudokuArray {
                     for (int j = 0; j < rank; j++) {
                         int value = cells[i][j];
                         //主对角线元素
-                        if(i==j){
-                            if (value != 0) {
+                        if(i==j&&value!= 0){
                                 if (mainDiagonalSet.contains(value)) {
                                     return false;
                                 }
                                 mainDiagonalSet.add(value);
-                            }
+
                         }
                     }
                 }
@@ -215,13 +210,11 @@ public class SudokuArray {
                     for (int j = 0; j < rank; j++) {
                         int value = cells[i][j];
                         //反对角线
-                        if(i+j==rank-1){
-                            if (value != 0) {
+                        if(i+j==rank-1&&value!=0){
                                 if (antiDiagonalSet.contains(value)) {
                                     return false;
                                 }
                                 antiDiagonalSet.add(value);
-                            }
                         }
                     }
                 }
