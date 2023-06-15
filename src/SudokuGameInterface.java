@@ -158,6 +158,7 @@ public class SudokuGameInterface extends JPanel{
         JTextField textField = new JTextField();
         Font font = new Font("Arial", Font.BOLD, 25);
         textField.setFont(font);
+
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setPreferredSize(new Dimension(80, 80));
 

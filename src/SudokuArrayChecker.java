@@ -41,7 +41,7 @@ public class SudokuArrayChecker {
 
     }
     //检查行是否有效
-    public   static boolean isRowValid(int[][] cells,int row){
+    private    static boolean isRowValid(int[][] cells,int row){
         int rank= cells.length;
         Set<Integer> rowSet = new HashSet<>();
         for (int j = 0;j < rank; j++) {
@@ -56,7 +56,7 @@ public class SudokuArrayChecker {
         return true;
     }
     //检查列是否有效
-    public   static boolean isColValid(int[][] cells,int col){
+    private   static boolean isColValid(int[][] cells,int col){
         int rank= cells.length;
         Set<Integer> colSet = new HashSet<>();
         for (int i = 0;i < rank; i++) {
@@ -72,7 +72,7 @@ public class SudokuArrayChecker {
     }
 
     //检查宫格内是否有效
-    public static boolean isGridValid(int [][] cells, int row, int col){
+    private static boolean isGridValid(int [][] cells, int row, int col){
         int rank= cells.length;
         Set<Integer> gridSet = new HashSet<>();
         int starRow;
@@ -135,7 +135,7 @@ public class SudokuArrayChecker {
     }
 
     //检查对角线内是否有效
-    public static boolean isDiagonalSetValid(int [][] cells, int row, int col) {
+    private static boolean isDiagonalSetValid(int [][] cells, int row, int col) {
         int rank= cells.length;
         String diagonalType ="null";  //所处的对角线类型
 

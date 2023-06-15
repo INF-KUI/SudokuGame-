@@ -1,0 +1,64 @@
+@startuml
+
+
+MainFrame<|-- JFrame
+SudokuGameInterface <|--JPanel
+DifficultyChoiceInterface <|--JPanel
+
+
+class MainFrame  {
++ void main 主方法
+
+}
+'难度选择面板类'
+class DifficultyChoiceInterface{
+难度选择面板
++DifficultyChoiceInterface() 构造方法
+-generateSudoku() 游戏开始，生成数独
+}
+'数独数组检查类'
+class SudokuArrayChecker{
++isValid()检查当前数独数组是否有效
+-isRowValid()检查行是否有效
+-isColValid()检查列是否有效
+-isGridValid()检查宫格内是否有效
+-isDiagonalSetValid()检查对角线内是否有效
+
+}
+class SudokuGameInterface{
+   数独游戏面板
++ SudokuGameInterface() 构造方法
+- addClickEffect()为每个文本框添加鼠标事件处理
+- clearCellBackground()清除所有背景颜色
+- JTextField createTextField()创建文本框
+- fillBackground()点击更改所在宫格的背景颜色
+-  fillDiagonalBackground()点击更改所在对角线的背景颜色
+}
+class SudokuChecker{
++ isValid ()  检查当前数独是否有效
+- lockAll()  锁定所有元素
++ clearAll() 清除所有元素
+-isRowValid() 检查行是否有效
+- isColValid() 检查列是否有效
+-   isDiagonalValid() 检查对角线内是否有效
+- isGridValid () 检查宫格内是否有效
++checkAnswer()  检查所有答案
+}
+
+class SudokuSaver {
+
++saveSudokuToCSV()保存数独到表格文件
+
+}
+
+class SudokuGenerator{
+数独题目生成器
+-removeNumbers()随机移除数字
+-copyToJTextField 把数独数组的值复制到文本框
++generateSudoku 生成数独
++solveSudoku 回溯法解数独
+
+}
+
+
+@enduml

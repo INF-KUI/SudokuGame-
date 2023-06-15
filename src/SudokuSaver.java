@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class SudokuSaver {
 
 
-    public static void saveSudokuToCSV(String filePath, JTextField[][] cells) {
+    public static void saveSudokuToCSV(String filePath, JTextField[][] cells,boolean isDiagonalSudoku) {
 
         int rank=cells.length;
 
@@ -19,6 +19,13 @@ public class SudokuSaver {
             writer.write(",");
             writer.write(String.valueOf(now));
             writer.write("\n");
+            if(isDiagonalSudoku){
+                writer.write(Integer.toString(rank)+"阶对角线数独"+",");
+            }
+            else{
+                writer.write(Integer.toString(rank)+"阶数独"+",");
+            }
+
             writer.write("数独题目:\n");
 
             //写入数独题目内容到CSV文件
@@ -45,7 +52,7 @@ public class SudokuSaver {
         }
     }
 
-    public static void saveSudokuToCSV(String filePath, int [][] sudoku) {
+    public static void saveSudokuToCSV(String filePath, int [][] sudoku,boolean isDiagonalSudoku) {
 
         int rank=sudoku.length;
         try {

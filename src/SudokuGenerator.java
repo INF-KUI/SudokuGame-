@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,9 +20,10 @@ public class SudokuGenerator {
         copyToJTextField(sudoku,cells);
         // 调用保存函数，并指定保存路径和文件名
         String filePath = "sudoku.csv";
+
         removeNumbers(cells);
-        SudokuSaver.saveSudokuToCSV(filePath,cells);
-        SudokuSaver.saveSudokuToCSV(filePath,sudoku);
+        SudokuSaver.saveSudokuToCSV(filePath,cells,isDiagonalSudoku);
+        SudokuSaver.saveSudokuToCSV(filePath,sudoku,isDiagonalSudoku);
     }
 
     private static void removeNumbers(JTextField[][] cells) {
@@ -35,6 +37,7 @@ public class SudokuGenerator {
             }
             else {
                 cells[row][col].setText("");
+                cells[row][col].setForeground(new Color(46,115,250));
                 i++;
                 continue;
             }
@@ -92,6 +95,7 @@ public class SudokuGenerator {
 //
 //
 //    }
+
     //回溯法解决数独问题
     public static boolean solveSudoku(int[][] board,boolean isDiagonalSudoku) {
 
@@ -102,22 +106,17 @@ public class SudokuGenerator {
                 for (int i = 1; i <= SIZE; i++) {
                     numbers.add(i);
                 }
-                //deleteNumbers(numbers,board);
-                //System.out.println(numbers);
-                Collections.shuffle(numbers);
-                //System.out.println(numbers);
-
+                Collections.shuffle(numbers);       //打乱可填入的数字
                 if (board[row][col] == 0) {
                     for (int num : numbers) {
                         board[row][col] = num;
-                        //System.out.printf("row=%d col=%d num=%d \n",row ,col,num);
+
                         if (SudokuArrayChecker.isValid(board,isDiagonalSudoku)) {
                             board[row][col] = num;
                             if (solveSudoku(board,isDiagonalSudoku)) {
-                                //printSudoku(board);
                                 return true;
                             }
-                            board[row][col] = 0; // 回溯
+                            board[row][col] = 0; //回溯
                         }
                         else board[row][col] = 0;
                     }

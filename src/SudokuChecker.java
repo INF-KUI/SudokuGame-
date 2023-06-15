@@ -87,6 +87,7 @@ public class SudokuChecker {
         for (int i = 0; i < rank; i++) {
             for (int j = 0; j < rank; j++) {
                 cells[i][j].setBackground(new Color(255,255,255));
+                cells[i][j].setForeground(new Color(0,0,0));
                 cells[i][j].setEditable(true);
                 cells[i][j].setText("");
             }
@@ -95,7 +96,7 @@ public class SudokuChecker {
 
     }
     //检查行是否有效
-    public   static boolean isRowValid(JTextField[][] cells,int row){
+    private    static boolean isRowValid(JTextField[][] cells,int row){
 
         int rank= cells.length;
         Set<String> rowSet = new HashSet<>();
@@ -111,7 +112,7 @@ public class SudokuChecker {
         return true;
     }
     //检查列是否有效
-    public   static boolean isColValid(JTextField[][] cells,int col){
+    private    static boolean isColValid(JTextField[][] cells,int col){
         int rank= cells.length;
         Set<String> colSet = new HashSet<>();
         for (int i = 0;i < rank; i++) {
@@ -126,7 +127,7 @@ public class SudokuChecker {
         return true;
     }
 //检查对角线内是否有效
-    public static boolean isDiagonalValid(JTextField[][] cells, int row, int col){
+    private static boolean isDiagonalValid(JTextField[][] cells, int row, int col){
         int rank= cells.length;
         String diagonalType ="null";  //所处的对角线类型
 
@@ -223,7 +224,7 @@ public class SudokuChecker {
 
 
     //检查宫格内是否有效
-    public static boolean isGridValid(JTextField[][] cells, int row, int col){
+    private static boolean isGridValid(JTextField[][] cells, int row, int col){
          int rank= cells.length;
         Set<String> gridSet = new HashSet<>();
         int starRow;
@@ -282,7 +283,7 @@ public class SudokuChecker {
         return  true;
     }
     //检查对角线数独的特殊宫格内是否有效
-    public static boolean isSpecialGridValid(JTextField[][] cells, int row, int col){
+    private static boolean isSpecialGridValid(JTextField[][] cells, int row, int col){
         int rank= cells.length;
         Set<String > specialGridSet = new HashSet<>();
 
@@ -1035,13 +1036,14 @@ public class SudokuChecker {
 
         int returnValue=isValid(cells,isDiagonalSudoku);
 
+
         switch(returnValue){
             case 1:
-                JOptionPane.showMessageDialog(null, "答案正确！", "完成", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"答案正确！", "正确",  JOptionPane.INFORMATION_MESSAGE);
                 //System.out.println("正确！！！");
                 break;
             case 0:
-                JOptionPane.showMessageDialog(null, "答案错误！", "错误", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"答案错误！", "错误", JOptionPane.INFORMATION_MESSAGE);
                 //System.out.println("错误！！！！！！");
                 break;
             case -1:

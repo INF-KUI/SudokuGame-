@@ -2,18 +2,22 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="SudokuGame:jar" />
+      <artifact name="SudokuGame:jar2" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="487e141c-d0ec-44d5-b7b8-835e680e7074" name="变更" comment="对角线数独未使用特殊宫格(求解算法效率太低)&#10;需要使用舞蹈链(Dancing Links)算法求解">
-      <change afterPath="$PROJECT_DIR$/src/SudokuGenerator.java" afterDir="false" />
+    <list default="true" id="487e141c-d0ec-44d5-b7b8-835e680e7074" name="变更" comment="优化类结构">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/SudokuGame_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/SudokuGame_jar2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/数独.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/流程.puml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DifficultyChoiceInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DifficultyChoiceInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sudoku.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SudokuArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuArrayChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SudokuArrayChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuArrayChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SudokuChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SudokuGameInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuGameInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SudokuGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SudokuSaver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SudokuSaver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +28,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="UML Class" />
+        <option value="UML Sequence" />
       </list>
     </option>
   </component>
@@ -50,15 +56,21 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultPlantUmlFileTemplate" value="UML Sequence" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/out" />
-    <property name="project.structure.last.edited" value="SDK" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="project.structure.last.edited" value="工件" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Desktop\java课设\SudokuGame\src" />
+    </key>
   </component>
   <component name="RunManager" selected="应用程序.MainFrame">
     <configuration name="MainFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -97,7 +109,10 @@
       <workItem from="1686679223607" duration="28000" />
       <workItem from="1686712832025" duration="1100000" />
       <workItem from="1686713964299" duration="133000" />
-      <workItem from="1686714111934" duration="26102000" />
+      <workItem from="1686714111934" duration="27978000" />
+      <workItem from="1686814356572" duration="12034000" />
+      <workItem from="1686834776991" duration="472000" />
+      <workItem from="1686842921260" duration="1974000" />
     </task>
     <task id="LOCAL-00001" summary="难度选择界面&#10;点击行列变色功能">
       <created>1686631359486</created>
@@ -169,7 +184,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686811012543</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="优化类结构">
+      <created>1686812753601</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1686812753601</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,6 +205,36 @@
             <State />
           </value>
         </entry>
+        <entry key="f968f827-eca7-421a-92e7-4f8d0b0b442c">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:D:/Desktop/java课设/SudokuGame/src" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="f968f827-eca7-421a-92e7-4f8d0b0b442c" value="TOOL_WINDOW" />
       </map>
     </option>
   </component>
@@ -197,6 +249,7 @@
     <MESSAGE value="对角线检测重复算法实现" />
     <MESSAGE value="实现特殊宫格检测重复&#10;但题目生成得很慢" />
     <MESSAGE value="对角线数独未使用特殊宫格(求解算法效率太低)&#10;需要使用舞蹈链(Dancing Links)算法求解" />
-    <option name="LAST_COMMIT_MESSAGE" value="对角线数独未使用特殊宫格(求解算法效率太低)&#10;需要使用舞蹈链(Dancing Links)算法求解" />
+    <MESSAGE value="优化类结构" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化类结构" />
   </component>
 </project>
