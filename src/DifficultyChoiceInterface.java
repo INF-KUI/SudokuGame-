@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class DifficultyChoiceInterface extends JPanel {
     private JComboBox<String> difficultyComboBox;
@@ -14,7 +15,7 @@ public class DifficultyChoiceInterface extends JPanel {
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
-        difficultyComboBox = new JComboBox<>(new String[]{"简单4x4", "中等6x6", "困难9x9","对角线数独"});
+        difficultyComboBox = new JComboBox<>(new String[]{"简单4x4", "中等6x6", "困难9x9","9x9对角线数独"});
         startButton = new JButton("开始游戏");
         startButton.addActionListener(e -> {
             generateSudoku();
@@ -35,9 +36,28 @@ public class DifficultyChoiceInterface extends JPanel {
         String difficulty = (String) difficultyComboBox.getSelectedItem();
         //dispose(); // 关闭难度选择窗口
         removeAll();
-        //取最后一个数字就是数独的阶数
-        int rank=Integer.parseInt(String.valueOf(difficulty.charAt(difficulty.length()-1)));
-        SudokuGameInterface sudokuGame = new SudokuGameInterface(rank); // 创建数独游戏窗口
+        int rank=0;
+        boolean isDiagonalSudoku=false;
+        //int rank=Integer.parseInt(String.valueOf(difficulty.charAt(difficulty.length()-1)));
+        switch (Objects.requireNonNull(difficulty)){
+            case  "简单4x4" :
+                rank=4;
+                break;
+            case  "中等6x6" :
+                rank=6;
+                break;
+            case  "困难9x9" :
+                rank=9;
+                break;
+            case  "9x9对角线数独" :
+                rank=9;
+                isDiagonalSudoku=true;
+                break;
+        }
+
+
+        SudokuGameInterface sudokuGame = new SudokuGameInterface(rank,isDiagonalSudoku); // 创建数独游戏窗口
+
         add(sudokuGame);
 
         Window window = SwingUtilities.getWindowAncestor(sudokuGame);

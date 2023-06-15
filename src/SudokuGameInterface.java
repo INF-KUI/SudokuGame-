@@ -21,7 +21,7 @@ public class SudokuGameInterface extends JPanel{
 
     private static Timer timer ;
 
-    public SudokuGameInterface(int rank) {
+    public SudokuGameInterface(int rank,boolean isDiagonalSudoku ) {
 
 
         GridBagLayout gridBagLayout=new GridBagLayout();
@@ -39,8 +39,8 @@ public class SudokuGameInterface extends JPanel{
             }
         }
         //为文本框添加点击效果
-        addClickEffect(cells);
-        generate(rank,cells);
+        addClickEffect(cells,isDiagonalSudoku);
+        generate(cells,isDiagonalSudoku);
 ////////////////////////////////////////////////////////
 //        int delay = 1000;
 //
@@ -77,7 +77,7 @@ public class SudokuGameInterface extends JPanel{
         add(finishButton, finishButtonConstraints);
         //完成按钮事件监听器
         finishButton.addActionListener(e->{
-                    Sudoku.checkAnswer(cells);
+                    Sudoku.checkAnswer(cells,isDiagonalSudoku);
                 }
         );
 
@@ -112,7 +112,7 @@ public class SudokuGameInterface extends JPanel{
         //重置按钮事件监听器
         resetButton.addActionListener(e -> {
 
-            generate(rank,cells);
+            generate(cells,isDiagonalSudoku);
 
         });
 
@@ -145,12 +145,12 @@ public class SudokuGameInterface extends JPanel{
     }
 
 
-        private static void generate(int rank,JTextField[][] cells){
+        private static void generate(JTextField[][] cells,boolean isDiagonalSudoku){
 
-
+        int rank= cells.length;
         Sudoku.clearAll(cells);
         int [][] sudoku =new int[rank][rank];
-        generateSudoku(sudoku);
+        generateSudoku(sudoku,isDiagonalSudoku);
         //printSudoku(sudoku);
         copyToFieldd(sudoku,cells);
         // 调用保存函数，并指定保存路径和文件名
@@ -196,12 +196,14 @@ public class SudokuGameInterface extends JPanel{
         }
     }
 
-    public static void generateSudoku(int[][] board) {
-        solveSudoku(board);
+    public static void generateSudoku(int[][] board,boolean isDiagonalSudoku) {
+        solveSudoku(board,isDiagonalSudoku);
 
     }
 
-    public static boolean solveSudoku(int[][] board) {
+    public static boolean solveSudoku(int[][] board,boolean isDiagonalSudoku) {
+
+
         int SIZE= board.length;
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
@@ -214,9 +216,9 @@ public class SudokuGameInterface extends JPanel{
                 if (board[row][col] == 0) {
                     for (int num : numbers) {
                             board[row][col] = num;
-                        if (SudokuArray.isValid(board)) {
+                        if (SudokuArray.isValid(board,isDiagonalSudoku)) {
                             board[row][col] = num;
-                            if (solveSudoku(board)) {
+                            if (solveSudoku(board,isDiagonalSudoku)) {
                                 return true;
                             }
                             board[row][col] = 0; // 回溯
@@ -243,7 +245,7 @@ public class SudokuGameInterface extends JPanel{
 
 
     // 为每个文本框添加鼠标事件处理
-    private void addClickEffect(JTextField[][] cells){
+    private void addClickEffect(JTextField[][] cells,boolean isDiagonalSudoku){
         int rank=cells.length;
         for (int row = 0; row < rank; row++) {
         for (int col = 0; col < rank; col++) {
@@ -260,39 +262,28 @@ public class SudokuGameInterface extends JPanel{
                         cells[finalRow][finalCol].setText("");
                     }
 
-
-                    //设置选中文本框所在的宫格的背景色
-                    fillBackground(cells,finalRow,finalCol);
                     // 设置选中文本框所在的列和所在的行的背景色
                     for (int i = 0; i < rank; i++) {
                         cells[finalRow][i].setBackground(new Color(187,222,251));
                         cells[i][finalCol].setBackground(new Color(187,222,251));
                     }
-
                     // 设置选中文本框所在的对角线的背景色
-                    fillDiagonalBackground(cells,finalRow,finalCol);
+                    if(isDiagonalSudoku){
+                        fillDiagonalBackground(cells,finalRow,finalCol);
+                        fillSpecialBackground(cells,finalRow,finalCol);
+
+                    }
+                    else{
+                        //设置选中文本框所在的宫格的背景色
+                        fillBackground(cells,finalRow,finalCol);
+                    }
+                    //更改当前选中的格子的背景色
                     cells[finalRow][finalCol].setBackground(new Color(0x52ec7c));
                 }
             });
         }
     }}
 
-
-
-
-//    private static void generateSudokuPuzzle() {
-//        // Generate a complete Sudoku grid
-//        solveSudoku(0, 0);
-//
-//        // Remove some numbers to create a puzzle
-//        int numToRemove = GRID_SIZE * GRID_SIZE / 2; // Adjust the number of cells to remove as desired
-//        Random random = new Random();
-//        for (int i = 0; i < numToRemove; i++) {
-//            int row = random.nextInt(GRID_SIZE);
-//            int col = random.nextInt(GRID_SIZE);
-//            sudokuGrid[row][col] = 0;
-//        }
-//    }
 
     //清除所有背景颜色
     private static void clearCellBackground(JTextField[][] cells) {
@@ -325,48 +316,6 @@ public class SudokuGameInterface extends JPanel{
     }
 
 
-
-
-    private boolean solve(int[][] board) {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                if (board[row][col] == 0) {
-                    for (int num = 1; num <= 9; num++) {
-                        if (isValid(board, row, col, num)) {
-                            board[row][col] = num;
-                            if (solve(board)) {
-                                return true;
-                            } else {
-                                board[row][col] = 0;
-                            }
-                        }
-                    }
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean isValid(int[][] board, int row, int col, int num) {
-        for (int i = 0; i < 9; i++) {
-            if (board[row][i] == num || board[i][col] == num) {
-                return false;
-            }
-        }
-
-        int startRow = 3 * (row / 3);
-        int startCol = 3 * (col / 3);
-        for (int i = startRow; i < startRow + 3; i++) {
-            for (int j = startCol; j < startCol + 3; j++) {
-                if (board[i][j] == num) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
 
     private void updateBoard(int[][] board) {
         for (int i = 0; i < 9; i++) {
@@ -418,8 +367,6 @@ public class SudokuGameInterface extends JPanel{
         }
 
     }
-
-
     //点击更改所在对角线的背景颜色
     private void fillDiagonalBackground(JTextField[][] cells,int row,int col ){
         Color backgroundColor=new Color(187,222,251);
@@ -470,6 +417,121 @@ public class SudokuGameInterface extends JPanel{
                 }
                 break;
         }
+
+    }
+
+
+    //填充特殊宫格内的背景
+    private void fillSpecialBackground(JTextField[][] cells,int row,int col ){
+       int fromWhich= Sudoku.detectFromWhichGrid(row,col);
+        Color backgroundColor=new Color(127,152,251);
+
+
+       switch(fromWhich){
+           case 1:
+               cells[0][0].setBackground(backgroundColor);
+               cells[0][1].setBackground(backgroundColor);
+               cells[0][2].setBackground(backgroundColor);
+               cells[0][3].setBackground(backgroundColor);
+               cells[1][0].setBackground(backgroundColor);
+               cells[1][1].setBackground(backgroundColor);
+               cells[2][0].setBackground(backgroundColor);
+               cells[3][0].setBackground(backgroundColor);
+               cells[3][1].setBackground(backgroundColor);
+               break;
+           case 2:
+               cells[0][4].setBackground(backgroundColor);
+               cells[1][2].setBackground(backgroundColor);
+               cells[1][3].setBackground(backgroundColor);
+               cells[1][4].setBackground(backgroundColor);
+               cells[2][1].setBackground(backgroundColor);
+               cells[2][2].setBackground(backgroundColor);
+               cells[2][3].setBackground(backgroundColor);
+               cells[2][4].setBackground(backgroundColor);
+               cells[3][2].setBackground(backgroundColor);
+               break;
+           case 3:
+               cells[0][5].setBackground(backgroundColor);
+               cells[0][6].setBackground(backgroundColor);
+               cells[0][7].setBackground(backgroundColor);
+               cells[0][8].setBackground(backgroundColor);
+               cells[1][5].setBackground(backgroundColor);
+               cells[1][6].setBackground(backgroundColor);
+               cells[1][8].setBackground(backgroundColor);
+               cells[2][5].setBackground(backgroundColor);
+               cells[2][8].setBackground(backgroundColor);
+               break;
+           case 4:
+               cells[4][0].setBackground(backgroundColor);
+               cells[4][1].setBackground(backgroundColor);
+               cells[4][2].setBackground(backgroundColor);
+               cells[5][0].setBackground(backgroundColor);
+               cells[5][1].setBackground(backgroundColor);
+               cells[5][2].setBackground(backgroundColor);
+               cells[6][1].setBackground(backgroundColor);
+               cells[6][2].setBackground(backgroundColor);
+               cells[7][1].setBackground(backgroundColor);
+               break;
+           case 5:
+               cells[3][3].setBackground(backgroundColor);
+               cells[3][4].setBackground(backgroundColor);
+               cells[3][5].setBackground(backgroundColor);
+               cells[4][3].setBackground(backgroundColor);
+               cells[4][4].setBackground(backgroundColor);
+               cells[4][5].setBackground(backgroundColor);
+               cells[5][3].setBackground(backgroundColor);
+               cells[5][4].setBackground(backgroundColor);
+               cells[5][5].setBackground(backgroundColor);
+               break;
+           case 6:
+               cells[1][7].setBackground(backgroundColor);
+               cells[2][6].setBackground(backgroundColor);
+               cells[2][7].setBackground(backgroundColor);
+               cells[3][6].setBackground(backgroundColor);
+               cells[3][7].setBackground(backgroundColor);
+               cells[3][8].setBackground(backgroundColor);
+               cells[4][6].setBackground(backgroundColor);
+               cells[4][7].setBackground(backgroundColor);
+               cells[4][8].setBackground(backgroundColor);
+               break;
+           case 7:
+               cells[6][0].setBackground(backgroundColor);
+               cells[6][3].setBackground(backgroundColor);
+               cells[7][0].setBackground(backgroundColor);
+               cells[7][2].setBackground(backgroundColor);
+               cells[7][3].setBackground(backgroundColor);
+               cells[8][0].setBackground(backgroundColor);
+               cells[8][1].setBackground(backgroundColor);
+               cells[8][2].setBackground(backgroundColor);
+               cells[8][3].setBackground(backgroundColor);
+               break;
+           case 8:
+               cells[5][6].setBackground(backgroundColor);
+               cells[6][4].setBackground(backgroundColor);
+               cells[6][5].setBackground(backgroundColor);
+               cells[6][6].setBackground(backgroundColor);
+               cells[6][7].setBackground(backgroundColor);
+               cells[7][4].setBackground(backgroundColor);
+               cells[7][5].setBackground(backgroundColor);
+               cells[7][6].setBackground(backgroundColor);
+               cells[8][4].setBackground(backgroundColor);
+               break;
+           case 9:
+               cells[5][7].setBackground(backgroundColor);
+               cells[5][8].setBackground(backgroundColor);
+               cells[6][8].setBackground(backgroundColor);
+               cells[7][7].setBackground(backgroundColor);
+               cells[7][8].setBackground(backgroundColor);
+               cells[8][5].setBackground(backgroundColor);
+               cells[8][6].setBackground(backgroundColor);
+               cells[8][7].setBackground(backgroundColor);
+               cells[8][8].setBackground(backgroundColor);
+               break;
+       }
+
+
+
+
 
     }
 

@@ -5,18 +5,38 @@ import java.util.Set;
 public class SudokuArray {
 
     //检查当前整个数独是否有效
-    public static boolean isValid(int [][] cells){
+    public static boolean isValid(int [][] cells,boolean isDiagonalSudoku){
         int rank=cells.length;
-        for (int i = 0; i < rank; i++) {
-            for (int j = 0; j < rank; j++) {
-                int value = cells[i][j];
-                if (value!=0){
-                    if(!isRowValid(cells,i)||!isColValid(cells,j)||!isGridValid(cells,i,j)) {
-                        return false;
+
+        if(isDiagonalSudoku){
+            for (int i = 0; i < rank; i++) {
+                for (int j = 0; j < rank; j++) {
+                    int value = cells[i][j];
+                    if (value!=0){
+                        //检查行 列  对角线 特殊宫格 是有否重复
+                        //条件严格题目生成得很慢
+                        if(!isRowValid(cells,i)||!isColValid(cells,j)||!isDiagonalSetValid(cells,i,j)||!isSpecialGridValid(cells,i,j)) {
+                            return false;
+                        }
                     }
                 }
             }
         }
+        else {
+            for (int i = 0; i < rank; i++) {
+                for (int j = 0; j < rank; j++) {
+                    int value = cells[i][j];
+                    if (value!=0){
+
+                        //只用 检查行 列  宫格 是有否重复
+                        if(!isRowValid(cells,i)||!isColValid(cells,j)||!isGridValid(cells,i,j)) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
 
         return true;
 
@@ -211,6 +231,659 @@ public class SudokuArray {
         return true;
 
     }
+
+    //检查对角线数独的特殊宫格内是否有效
+    public static boolean isSpecialGridValid(int[][] cells, int row, int col){
+        int rank= cells.length;
+        Set<Integer > specialGridSet = new HashSet<>();
+
+        int fromWhich= Sudoku.detectFromWhichGrid(row,col);
+        int value=0;
+        switch(fromWhich){
+            case 1:
+                value =cells[0][0];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[0][1];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value =cells[0][2];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value =cells[0][3];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value =cells[1][0];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[1][1];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value =cells[2][0];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value =cells[3][0];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[3][1];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                break;
+            case 2:
+                value=cells[0][4];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value =cells[1][2];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value =cells[1][3];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value =cells[1][4];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value =cells[2][1];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value =cells[2][2];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[2][3];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value =cells[2][4];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[3][2];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                break;
+            case 3:
+                value =cells[0][5];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[0][6];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[0][7];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[0][8];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[1][5];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[1][6];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[1][8];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[2][5];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                value = cells[2][8];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+                break;
+            case 4:
+                value= cells[4][0];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[4][1];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[4][2];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[5][0];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[5][1];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[5][2];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[6][1];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[6][2];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[7][1];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                break;
+            case 5:
+                value= cells[3][3];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[3][4];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[3][5];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[4][3];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[4][4];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[4][5];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[5][3];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[5][4];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[5][5];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                break;
+            case 6:
+                value= cells[1][7];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[2][6];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[2][7];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[3][6];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[3][7];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[3][8];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[4][6];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[4][7];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[4][8];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                break;
+            case 7:
+                value= cells[6][0];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[6][3];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[7][0];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[7][2];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[7][3];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[8][0];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[8][1];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[8][2];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[8][3];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                break;
+            case 8:
+                value= cells[5][6];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[6][4];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[6][5];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[6][6];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[6][7];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[7][4];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[7][5];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[7][6];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[8][4];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                break;
+            case 9:
+                value= cells[5][7];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[5][8];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[6][8];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[7][7];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[7][8];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[8][5];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[8][6];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[8][7];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                value= cells[8][8];
+                if (value!=0) {
+                    if (specialGridSet.contains(value)) {
+                        return false;
+                    }
+                    specialGridSet.add(value);
+                }
+
+                break;
+        }
+
+        return true;
+    }
+
 
 
 }
